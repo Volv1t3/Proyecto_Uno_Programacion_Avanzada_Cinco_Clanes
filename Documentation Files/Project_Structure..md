@@ -292,5 +292,15 @@ pueden estar organizados independientemente, pero para calcular el puntaje total
 secudarios y asigne al parametro principal el resultado de las sumas parciales.
 
 </li>
+
+<li>
+Con el motivo de mantener el orden con la llamada de las funciones, se decidio adjuntar todos los metodos de calculo de valores
+dentro de un mismo metodo en la clase de cada jugador. Ya que los metoos para calcular el total de puntos por caso son 
+protected, no tenemos que tener miedo de accesso publico por el usuario a esos metodos y asi nos aseguramos de una correcta
+ejecucion del codigi.
+<br>
+En base a esto, el puntaje va a ser retornado como un solo valor luego de la llamada de esta funcion.
+</li>
+
 </ul>
 

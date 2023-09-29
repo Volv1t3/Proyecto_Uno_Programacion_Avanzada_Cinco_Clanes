@@ -23,22 +23,9 @@
 
 //! Implementacion de Constructores
 
-pUno_Jugador_Class::pUno_Jugador_Class(std::string nombre_jugador_ingresado)
+pUno_Jugador_Class::pUno_Jugador_Class()
 {
-    try
-    {
-        if (nombre_jugador_ingresado.size() > 0)
-        {
-            this->nombre_jugador = nombre_jugador_ingresado;
-        }
-        else {throw std::invalid_argument("Error Code 0x001 [Raised] - El valor ingresado para @nombre_jugador_ingresado@ es invalido.\n"
-                                          "Error Code 0x003 [Raised] - El valor ingresado como parametro para constructor es invalido.\n");}
-    }
-    catch (std::invalid_argument &error)
-    {
-        std::cerr << "Error en el Constructor de la clase Jugador\n";
-        std::cerr << error.what() << std::endl;
-    }
+
 }
 
 //? Implementacion de los metodos pertenecientes a base.2 por tanto, metodos  set y get y de registro de tarjetas
@@ -103,19 +90,21 @@ pUno_Jugador_Class& pUno_Jugador_Class::registar_tarjeta_completamente_basada_en
     //? Paso base: como sabemos que el programa no envia tarjetas malas a los jugadores, podemos asumir que los valores van a ser correctos, aunque por
     //? redundanci podemos anadir otro caso de check por si acaso
     try {
-        if (tipo_de_carta >= 1 && tipo_de_carta <= 8 && clan_de_la_carta >= 0 && clan_de_la_carta < 5)
+        if ((tipo_de_carta >= 1 && tipo_de_carta <= 8) && (clan_de_la_carta >= 0 && clan_de_la_carta < 5))
         {
             //? Paso inductivo: Registrar la tarjeta en el vector de tarjetas del jugador
             this->holder_matriz_para_tarjetas_por_fila_y_columna.at(tipo_de_carta -1).at(clan_de_la_carta) = 1;
+            this->cantidad_de_cartas_jugador +=1;
         }
-        else if ( tipo_de_carta < 1 && tipo_de_carta > 8)
+        else if ( tipo_de_carta < 1 || tipo_de_carta > 8)
         {
             throw std::invalid_argument("Error Code 0x001 [Raised] - El valor ingresado para @tipo_de_carta@ es invalido.\n");
         }
-        else if (clan_de_la_carta < 0 && clan_de_la_carta > 4)
+        else if (clan_de_la_carta < 0 || clan_de_la_carta > 5)
         {
             throw std::invalid_argument("Error Code 0x001 [Raised] - El valor ingresado para @clan_de_la_carta@ es invalido.\n");
         }
+        return *this;
     }
     catch (std::invalid_argument &error)
     {
@@ -130,8 +119,11 @@ void pUno_Jugador_Class::cuantificar_puntos_del_jugador()
     //?  Paso base: Llamamos a cada una de las funciones espeficias para cada metodo y cuantificamos su vor en una variable auto (tipo
     //? asignado en ejecucion: int)
      auto puntos_registrados_por_caso_1 =  pUno_Jugador_Class::metodo_busqueda_uno_caso_de_armada_con_igual_valor();
+     std::cout << "debug : (puntos caso 1): " << puntos_registrados_por_caso_1 << std::endl;
      auto puntos_registrados_por_caso_2 =  pUno_Jugador_Class::metodo_busqueda_dos_caso_de_armada_con_igual_tipo();
+     std::cout << "debug : (puntos caso 2): " << puntos_registrados_por_caso_2 << std::endl;
      auto puntos_registrados_por_caso_3 =  pUno_Jugador_Class::metodo_busqueda_tres_caso_de_armada_con_rango_consecutivo();
+     std::cout << "debug : (puntos caso 3): " << puntos_registrados_por_caso_3 << std::endl;
 
      //? Paso indutivo: sumamos todos los resultados, si hay alguno cero no habria problema porque solo no afecta al resultado, y de esta forma
      //? solo tenemos los valores de los casos que apliquen.
@@ -190,7 +182,7 @@ int pUno_Jugador_Class::metodo_busqueda_tres_caso_de_armada_con_rango_consecutiv
     //? las cartas iguales y ademas de esto notar su posicion en las columnas.
     int counter_tarjetas_con_valores_consecutivos{0};
     bool existe_continuidad_en_los_valores = true;
-
+    int temp_for_holding_continuity{0};
     //? Paso inductivo:  Movimiento a traves del arreglo por filas chequeando valores en cada columna
     for(size_t fila_index = 0; fila_index < holder_matriz_para_tarjetas_por_fila_y_columna.size(); fila_index+=1)
     {
@@ -203,10 +195,32 @@ int pUno_Jugador_Class::metodo_busqueda_tres_caso_de_armada_con_rango_consecutiv
             }
         }
         if (hay_un_valor_en_la_fila) {counter_tarjetas_con_valores_consecutivos +=1;}
-        else { existe_continuidad_en_los_valores = false; counter_tarjetas_con_valores_consecutivos =0;}
+        else { existe_continuidad_en_los_valores = false;
+            temp_for_holding_continuity = counter_tarjetas_con_valores_consecutivos;
+            counter_tarjetas_con_valores_consecutivos =0;}
     }
 
-    return 3 * counter_tarjetas_con_valores_consecutivos;
+    //? Paso Inductivo.2: Debemos utilizar logica entre el temp de la continuidad y el valor que puede existir en la variable
+    //? counter
+    if ((counter_tarjetas_con_valores_consecutivos > temp_for_holding_continuity)
+    && counter_tarjetas_con_valores_consecutivos >= 3)
+    {
+        return 3 * counter_tarjetas_con_valores_consecutivos;
+    }
+    else if ((temp_for_holding_continuity > counter_tarjetas_con_valores_consecutivos) && temp_for_holding_continuity >= 3)
+    {
+        return 3 * temp_for_holding_continuity;
+    }
+
+    return 0;
 }
 
+
+void pUno_Jugador_Class::imprimir_cartas_del_jugador()
+{
+    for(size_t index = 0; index < pUno_Jugador_Class::holder_para_nombres_de_tarjetas_jugador.size(); index+=1)
+    {
+        std::cout << pUno_Jugador_Class::holder_para_nombres_de_tarjetas_jugador.at(index) << std::endl;
+    }
+}
 

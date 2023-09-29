@@ -35,16 +35,16 @@ class pUno_Logica_Basica_Class
 {
 private:
     //! Paso base.1: Declaracion de las varaibles constantes para la logica funcional del programa
-    std::array<int, 40> holder_para_los_numeros_reales_de_cada_tarjeta;
+    std::array<int, 40> holder_para_los_numeros_reales_de_cada_tarjeta{};
     const std::array<std::string,5>  clanes_definidos_para_el_juego{"Luna","Sol","Agua","Cruz","Espada"};
 
     //! Paso base.2: Declaraciond e los holders para las tarjetas usadas, por usar y la cantidad de tarjetas que existen en una
     //! partida
-    std::array<std::array<int,5>,8> cartas_que_ya_fueron_jugadas;
+    std::array<std::array<int,5>,8> cartas_que_ya_fueron_jugadas{};
     std::vector<int> indices_que_ya_fueron_jugados;
 
     //! Paso base.3: Declaracion de las variables constantes para la ejecucion del juego.
-    static const int cantidad_de_tarjetas_por_palo{8}, cantidad_de_tipos_de_tarjetas{5},
+    const int cantidad_de_tarjetas_por_palo{8}, cantidad_de_tipos_de_tarjetas{5},
     cantidad_de_tarjetas_por_partida{40}, cantidad_de_tarjetas_por_jugador{8};
 
 public:

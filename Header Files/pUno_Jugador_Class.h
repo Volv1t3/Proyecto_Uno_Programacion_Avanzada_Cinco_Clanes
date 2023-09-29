@@ -44,7 +44,7 @@ private:
 public:
     //! Paso base.1: Definicion del constructor de la clase, con argumentos, no se puede tener sin argumentos porque el juego
     //! requiere tener el nombre del jugador para impresiones
-    explicit pUno_Jugador_Class(std::string nombre_jugador_ingresado);
+    pUno_Jugador_Class();
 
     //! Paso base.2 Definicion de metodos de entrada y salida de datos para los puntos y cantidad de cartas
         //?  Metodo para obtener el nombre del jugador
@@ -64,7 +64,8 @@ public:
     //! Metodo para trabajar con funciones protected sin exponerlas a abusos por el user o errores en el main.
         //? Metodo general para llamar a cada uno y asignar los valores directamente.
         void cuantificar_puntos_del_jugador();
-
+    //! Metodo para imprimir las cartas del usuario.
+    void imprimir_cartas_del_jugador();
 protected:
     //! Paso base.2: Definimos Los metodos de busqueda para encontrar cada caso para victoria, lo hacemos dentor de la clase
     //! jugador y nos evitamos tener que sacar informacion privilegiada al main del juego como lo son los arreglos de tarjetas
