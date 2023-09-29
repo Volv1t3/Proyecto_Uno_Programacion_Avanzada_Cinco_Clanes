@@ -207,4 +207,90 @@ tarjetas basado en el tipo de tarjeta, es decir el peso de la tarjeta, y la posi
 en todas las situaciones posibles ya han salido o si se trata de que no han salido todas pero si la que se busca. De esta forma tenemos 
 un control fuerte sobre las tarjetas que enviamos.
 </li>
+
+<li>
+Como se puede apreciar en el archivo de implementacion, se trabajo con bastantes metodos de las librerias std::random y 
+std::algorithm, los cuales facilitaron el mezclar y el generar indices aleatorios para trabajar con las tarjetas.
+<br> Con respecto a las tarjetas, se trabajo con una representacion en forma de matrix, de ocho filas por cinco columnas para 
+representar las posibles combinaciones de las tarjetas en el juego. En base a esta representacion se disenaron los atributos constantes,
+para manejar la cantidad de tarjetas, los indices que aparecieron y constantes de la logica del juego como son cantidad de 
+tarjetas por tipo y cantidad de tipos de tarjetas.
+</li>
+
+<li>
+El retorno de la clase se realizo uilizando el struct presentado anteriormente en esta seccion, el cual nos permite desglozar 
+dentro del programa principal valores para anadir a la clase Jugador, proxima a ser implementada. De esta forma podemos desglozar
+tanto: <span style="font-family: Consolas, sans-serif; color: aqua"> nombre de tarjeta, valor de tarjeta, y tipo de tarjeta </span> datos con los que
+se puede trabajar para llevar contadores especificos para cada instancia de la clase jugador.
+</li>
 </ul>
+
+* ** 
+
+<h6 style=" font-family: 'Segoe UI', serif; font-size: 14pt; color: azure"> Especificaciones de la clase Jugador </h6>
+
+<ul style="font-family: 'Segoe UI',sans-serif; list-style: upper-alpha">
+
+<li>
+Para la clase del jugador, debemos tener en cuenta que existen una sola forma de ganar en este juego 
+<span style=" font-family: Consolas, sans-serif; color: aqua">: mayor puntaje: </span> para esto debemos de tener una de las 
+cuatro combinaciones posibles en algun momento de la partida, si tenemos esto podemos decir que sacamos mas puntaje en base
+a las cartas que sacamos, o mejor dicho, que la clase logica basica nos entrega.
+
+<br>
+Los casos son los siguientes:
+<br>
+<ul style="list-style: lower-roman">
+    <li>
+        Si se tiene tres o mas cartas de un mismo valor, entonces cada carta cuenta por siete puntos,
+    </li>
+    <li>
+        Si se tiene tres o mas cartas del mismo clan, entonces cada carta vale cinco puntos,
+    </li>
+    <li>
+        Si se tiene tres o mas cartas de diferentes valores pero consecutivos cada carta vale tres,
+    </li>
+</ul>
+<br>
+Basados en estos casos podemos notar que requerimos de tener en cuenta diferentes contadores, una posible implemetacion de esta
+clase podria contener algo como lo siguiente:
+
+```c++
+#include ...
+class pUno_Clase_Jugador
+        {
+            private:
+            //? Contadores para cada tipo de carta
+            std::array<std::array<int,5>,8> holder_matriz_para_tarjetas_por_fila_y_columna
+            //? Contadores para cartas y puntos del jugador
+            int cantidad_de_puntos_jugador{0};
+            int cantidad_de_cartas_jugador{0};
+            //? Arreglo extra para la impresion de los nombres de cada tarjeta
+            std::vector<std::string> holder_para_nombres_de_tarjetas_del_jugador{};
+        };
+
+```
+Lo bonito de esta solucion al problema es que al decir nosotrso que solamente requerimos una matrix de dos dimensiones 
+sabemos que todos los casos se pueden revisar en las mismas, Por ejemplo para el primer caso de cartas con el mismo valor, 
+basta con revisar columna por columna si la suma de los valores con un 1 es mayor que 3. Si esto se cumple
+entonces decimos que la primera regla se cumple y sumamos el valor de 7 * cantidad de cartas del mismo valor.
+
+<br>
+Para el segundo caso, si nosotros hacemos la misma suma pero por columnas entonces tenemos la cantidad de cartas del mismo clan
+en la columan y solo hacemos el numero total de cartas por 5 para obtener el puntaje. 
+
+<br>
+Para el ultimo caso, podemos implementar un algoritmo de busqueda sencillo que trabaje alrededor de la matriz,y  que se mueva
+principalmente por el camino de las columnas, asi, independientemente del clan que sean se encontraran cartas consecutivas
+si se encuentran en estas columnas. Asimismo, podriamos incluso utilizar el algoritmo del caso dos y ampliarlo hasta cierto 
+punto para que corra para toda la matriz.
+</li> 
+<li>
+Debido a la complejidad de los metodos, es mucho mas factible organizarlos dentro de la misma clase y no delegarlos a  otra,
+de esta forma podemos asegurarnos de no necesitar de variables staticas sino simplemente de variables locales a cada objeto. Los metodos
+pueden estar organizados independientemente, pero para calcular el puntaje total, seria muy conveniente hacer un metodo general que llame a los 
+secudarios y asigne al parametro principal el resultado de las sumas parciales.
+
+</li>
+</ul>
+
