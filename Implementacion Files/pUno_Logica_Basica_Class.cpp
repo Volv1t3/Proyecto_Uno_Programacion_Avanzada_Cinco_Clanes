@@ -115,6 +115,7 @@ Tarjeta_Jugada pUno_Logica_Basica_Class::seleccionar_una_tarjeta_y_retornar_stru
     //? Paso base.3:  Chequeo de Redundancia base, que pasa si los indices usados ya son cuarenta?
     if (pUno_Logica_Basica_Class::indices_que_ya_fueron_jugados.size() == 40)
     {
+        pUno_Logica_Basica_Class::reiniciar_arreglo_de_tarjetas_jugadas();
         objeto_tarjeta_de_retorno_a_user.clan_de_la_carta = -1;
         objeto_tarjeta_de_retorno_a_user.valor_de_carta = -1;
         objeto_tarjeta_de_retorno_a_user.nombre_de_la_carta = "40 Tarjetas Jugadas";

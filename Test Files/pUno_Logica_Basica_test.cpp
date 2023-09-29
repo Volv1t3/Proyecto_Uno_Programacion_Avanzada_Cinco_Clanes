@@ -17,7 +17,7 @@
 #include <vector>
 #include <array>
 #include "../Header Files/pUno_Logica_Basica_Class.h"
-#include "pUno_Logica_Basica_Class.cpp"
+#include "../Implementacion Files/pUno_Logica_Basica_Class.cpp"
 /**-------------------------------------------
  * ? Main Program
 -------------------------------------------**/
