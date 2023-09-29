@@ -195,7 +195,7 @@ int pUno_Jugador_Class::metodo_busqueda_tres_caso_de_armada_con_rango_consecutiv
             }
         }
         if (hay_un_valor_en_la_fila) {counter_tarjetas_con_valores_consecutivos +=1;}
-        else { existe_continuidad_en_los_valores = false;
+        else  if (hay_un_valor_en_la_fila == false && counter_tarjetas_con_valores_consecutivos !=0){
             temp_for_holding_continuity = counter_tarjetas_con_valores_consecutivos;
             counter_tarjetas_con_valores_consecutivos =0;}
     }
