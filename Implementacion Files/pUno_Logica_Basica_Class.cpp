@@ -18,34 +18,26 @@
 #include <array>
 #include <algorithm>
 #include <random>
-#include "../Header Files/pUno_Logica_Basica_Class.h"
+#include "./../Header Files/pUno_Logica_Basica_Class.h"
 
 /**-------------------------------------------
  * ? Main Program
 -------------------------------------------**/
 
+pUno_Logica_Basica_Class::pUno_Logica_Basica_Class()
+{
+    pUno_Logica_Basica_Class::generar_tarjetas_procedure_generation();
+    pUno_Logica_Basica_Class::mezclar_tarjetas_shuffle_random();
+}
 
 //! Implementacion de los Metodos Protected primero ya que otras funciones de public dependeran de ellos
 
 bool pUno_Logica_Basica_Class::revisar_si_la_tarjeta_ya_fue_jugada(int peso_de_la_tarjeta, int palo_de_la_tarjeta)
 {
-    //? Paso base: Definir variables para el holdeo del conteo de tarjetas.
-    int contador_de_aparaciones_de_tarjetas = 0;
-
-    //? Paso Inductivo.1: Trabajamos con un for a traves de toda  la columna del tipo de carta enviado para encontrar apariciones
-    for (std::size_t columna = 0; columna < pUno_Logica_Basica_Class::cantidad_de_tipos_de_tarjetas; columna+=1)
-    {
-        if (pUno_Logica_Basica_Class::cartas_que_ya_fueron_jugadas.at(peso_de_la_tarjeta).at(columna) == 1)
-        {
-            contador_de_aparaciones_de_tarjetas += 1;
-        }
-    }
-
     //? Paso Inductivo.2: Enviamos los resultados independientenmente de que hayan todas las tarjetas o de que solo sea el caso, la funcion decide
     //? cual de los casos se aplica a traves de un ||
 
-    if ((contador_de_aparaciones_de_tarjetas == pUno_Logica_Basica_Class::cantidad_de_tipos_de_tarjetas )||
-            (pUno_Logica_Basica_Class::cartas_que_ya_fueron_jugadas.at(peso_de_la_tarjeta).at(palo_de_la_tarjeta) == 1))
+    if (pUno_Logica_Basica_Class::cartas_que_ya_fueron_jugadas.at(peso_de_la_tarjeta).at(palo_de_la_tarjeta) == 1)
     {
         return true;
     }
@@ -79,7 +71,7 @@ void pUno_Logica_Basica_Class::generar_tarjetas_procedure_generation()
 
     for(std::size_t index = 0; index < pUno_Logica_Basica_Class::cantidad_de_tarjetas_por_partida; index +=1)
     {
-        pUno_Logica_Basica_Class::holder_para_los_numeros_reales_de_cada_tarjeta.at(index) =index;
+        pUno_Logica_Basica_Class::holder_para_los_numeros_reales_de_cada_tarjeta.at(index) = index;
     }
 
     //? En base a este metodo simplemente creamos tarjetascon valores desde 0 a 40, y con el modulo 5 obtendremos valores desde 0 hasta 7 con
@@ -113,9 +105,12 @@ Tarjeta_Jugada pUno_Logica_Basica_Class::seleccionar_una_tarjeta_y_retornar_stru
 
     std::random_device random_device_para_seleccion_de_tarjetas;
     std::mt19937 generador_mt_de_tarjetas_random(random_device_para_seleccion_de_tarjetas());
-    std::uniform_int_distribution<int> distribution_de_tarjetas_random(0, pUno_Logica_Basica_Class::cantidad_de_tarjetas_por_partida-1);
+    std::uniform_int_distribution<int> distribution_de_tarjetas_random(0, 39);
     int index_de_tarjeta_random = distribution_de_tarjetas_random(generador_mt_de_tarjetas_random);
     int tarjeta_en_index_obtenido_a_anadir = pUno_Logica_Basica_Class::holder_para_los_numeros_reales_de_cada_tarjeta.at(index_de_tarjeta_random);
+    pUno_Logica_Basica_Class::indices_que_ya_fueron_jugados.push_back(tarjeta_en_index_obtenido_a_anadir);
+
+
 
     //? Paso base.3:  Chequeo de Redundancia base, que pasa si los indices usados ya son cuarenta?
     if (pUno_Logica_Basica_Class::indices_que_ya_fueron_jugados.size() == 40)
@@ -126,17 +121,87 @@ Tarjeta_Jugada pUno_Logica_Basica_Class::seleccionar_una_tarjeta_y_retornar_stru
 
         return objeto_tarjeta_de_retorno_a_user;
     }
-    // ? Paso base.4:  Chequeo de Redundancia, que pasa si el indice ya fue usado?
-    for( auto const& indice_de_tarjeta_ya_usado: pUno_Logica_Basica_Class::indices_que_ya_fueron_jugados)
-    {
-        if (tarjeta_en_index_obtenido_a_anadir == indice_de_tarjeta_ya_usado)
-        {
-            index_de_tarjeta_random = distribution_de_tarjetas_random(generador_mt_de_tarjetas_random);
-            tarjeta_en_index_obtenido_a_anadir = pUno_Logica_Basica_Class::holder_para_los_numeros_reales_de_cada_tarjeta.at(index_de_tarjeta_random);
-        }
-    }
-    pUno_Logica_Basica_Class::indices_que_ya_fueron_jugados.push_back(tarjeta_en_index_obtenido_a_anadir);
+
 
     //? Paso Inductivo.1: Definimos variables base para generar el struct, y luego
+    int valor_de_la_carta{0};
+    std::string nombre_calculado_de_la_carta;
+    int peso_de_la_carta_calculado = {tarjeta_en_index_obtenido_a_anadir % pUno_Logica_Basica_Class::cantidad_de_tarjetas_por_palo};
+    switch(peso_de_la_carta_calculado)
+    {
+        case 0: {valor_de_la_carta = 1; break;}
+        case 1: {valor_de_la_carta = 2; break;}
+        case 2: {valor_de_la_carta = 3; break;}
+        case 3: {valor_de_la_carta = 4; break;}
+        case 4:  {valor_de_la_carta = 5; break;}
+        case 5: {valor_de_la_carta = 6; break;}
+        case 6: {valor_de_la_carta = 7; break;}
+        case 7: {valor_de_la_carta = 8; break;}
+        default: {valor_de_la_carta = -1; break; /*Aqui no deberia entrar [[debug]]*/}
+    }
+
+    //? Paso Inductivo.2: Definimos el nombre de la carta basada en la division por cantidad de cartas
+    int indicador_de_tipo_de_carta_basado_en_numero{0};
+    int tipo_de_carta_calculado{tarjeta_en_index_obtenido_a_anadir / pUno_Logica_Basica_Class::cantidad_de_tarjetas_por_palo};
+    switch(tipo_de_carta_calculado)
+    {
+        case 0:
+        {
+            nombre_calculado_de_la_carta = std::to_string(valor_de_la_carta) + " de Luna";
+            indicador_de_tipo_de_carta_basado_en_numero = 0;
+            break;
+        }
+        case 1:
+        {
+            nombre_calculado_de_la_carta = std::to_string(valor_de_la_carta) + " de Sol";
+            indicador_de_tipo_de_carta_basado_en_numero = 1;
+            break;
+        }
+        case 2:
+        {
+            nombre_calculado_de_la_carta = std::to_string(valor_de_la_carta) + " de Agua";
+            indicador_de_tipo_de_carta_basado_en_numero = 2;
+            break;
+        }
+        case 3:
+        {
+            nombre_calculado_de_la_carta = std::to_string(valor_de_la_carta) + " de Cruz";
+            indicador_de_tipo_de_carta_basado_en_numero = 3;
+            break;
+        }
+        case 4:
+        {
+            nombre_calculado_de_la_carta = std::to_string(valor_de_la_carta) + " de Espada";
+            indicador_de_tipo_de_carta_basado_en_numero = 4;
+            break;
+        }
+        default: [[debug]]
+        {
+            nombre_calculado_de_la_carta = "Aqui no se debe llegar";
+            indicador_de_tipo_de_carta_basado_en_numero = -1;
+            break;
+        }
+
+    }
+
+    // ? Paso Inductivo.3: Revisamos por cuarta vez: que pasa si todo lo generado y las seguridades fallan, acaso mandamos
+    //? otra tarjeta mala?
+
+    auto flow_control = pUno_Logica_Basica_Class::
+            revisar_si_la_tarjeta_ya_fue_jugada(peso_de_la_carta_calculado, tipo_de_carta_calculado);
+
+    if (flow_control == false)
+    {
+        pUno_Logica_Basica_Class::cartas_que_ya_fueron_jugadas
+        .at(peso_de_la_carta_calculado).at(tipo_de_carta_calculado) = 1;
+        objeto_tarjeta_de_retorno_a_user.nombre_de_la_carta = nombre_calculado_de_la_carta;
+        objeto_tarjeta_de_retorno_a_user.valor_de_carta = valor_de_la_carta;
+        objeto_tarjeta_de_retorno_a_user.clan_de_la_carta = tipo_de_carta_calculado;
+        return objeto_tarjeta_de_retorno_a_user;
+    }
+    else if (flow_control == true)
+    {
+        pUno_Logica_Basica_Class::indices_que_ya_fueron_jugados.pop_back();
+        return pUno_Logica_Basica_Class::seleccionar_una_tarjeta_y_retornar_struct();
+    }
 }
-[[nodiscard]] [[clang::standalone_debug]] void debug_imprimir_tarjetas_de_juego();
