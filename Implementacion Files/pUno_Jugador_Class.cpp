@@ -119,11 +119,8 @@ void pUno_Jugador_Class::cuantificar_puntos_del_jugador()
     //?  Paso base: Llamamos a cada una de las funciones espeficias para cada metodo y cuantificamos su vor en una variable auto (tipo
     //? asignado en ejecucion: int)
      auto puntos_registrados_por_caso_1 =  pUno_Jugador_Class::metodo_busqueda_uno_caso_de_armada_con_igual_valor();
-     std::cout << "debug : (puntos caso 1): " << puntos_registrados_por_caso_1 << std::endl;
      auto puntos_registrados_por_caso_2 =  pUno_Jugador_Class::metodo_busqueda_dos_caso_de_armada_con_igual_tipo();
-     std::cout << "debug : (puntos caso 2): " << puntos_registrados_por_caso_2 << std::endl;
-     auto puntos_registrados_por_caso_3 =  pUno_Jugador_Class::metodo_busqueda_tres_caso_de_armada_con_rango_consecutivo();
-     std::cout << "debug : (puntos caso 3): " << puntos_registrados_por_caso_3 << std::endl;
+    auto puntos_registrados_por_caso_3 =  pUno_Jugador_Class::metodo_busqueda_tres_caso_de_armada_con_rango_consecutivo();
 
      //? Paso indutivo: sumamos todos los resultados, si hay alguno cero no habria problema porque solo no afecta al resultado, y de esta forma
      //? solo tenemos los valores de los casos que apliquen.

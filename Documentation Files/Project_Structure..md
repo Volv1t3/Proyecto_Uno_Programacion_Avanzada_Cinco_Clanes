@@ -304,3 +304,115 @@ En base a esto, el puntaje va a ser retornado como un solo valor luego de la lla
 
 </ul>
 
+* ** 
+
+<h6 style=" font-family: 'Segoe UI', serif; font-size: 14pt; color: azure"> Especificaciones del archivo principal y funciones generales para programa principal</h6>
+
+<ul style="font-family: 'Segoe UI',sans-serif; list-style: upper-alpha">
+
+Consideremos el proceso del juego en general. Para este paso debemos de tener  en cuenta la necesidad de incorporar todas
+las clases que hemos creado: nuestra clase jugador y nuestra clase logica basica. Como sabemos la clase 
+logica basica cuenta con la funcionalidad general de todo el juego y es la base del servicio de "dealer" que 
+necesita el juego. Por tanto para la clase logica basica tenemos las siguientes especificaciones para las funcoines y su 
+trabajo en el main del juego
+<ul style="list-style: inherit; font-family: Consolas; color: antiquewhite">
+    <li> Un solo objeto de esta clase puede estar presente en todo momento durante el juego.</li>
+    <li> Los metodos de funcionamiento para el programa principal deben recibir una referencia al objeto de esta clase</li>
+</ul>
+
+Si ahora tomamos en cuenta los requerimientos de la clase jugador, sabemos que para el programa principal se debe de poder
+trabajar con n cantidad de jugadores. Por tanto, necesitaremos de un vector de jugadoresl y por lo tanto
+<ul style="font-family: Consolas, sans-serif; list-style: inherit; color: antiquewhite">
+    <li> Un solo vector para la lista jugador debe ser creado, por esto los jugadores no deben tener constructores que recepten datos</li>
+    <li> Para enviar informacion a los metodos exteriores al main se debe enviar una referencia al objeto vector que contiene a los jugadores</li>
+</ul>
+
+De esta forma cuando nosotros implementemos nuestras funcioens nunca generaremos copias extras y aseguramos una mejor validacion de datos y 
+rapidez para la aplicacion. Por otro lado tenemos que considerar el procesod de ingreso de datos, si bien nosotros podemos intentar y hacer que el usuario,
+por medio de mensajes, ingrese valores **corectos**. Nosotros sabemos como programadores que esto es muy probable que no pase y el usuario tenga errores en los datos.
+
+Por esta razon, asumimos el reto de en cada control de ingreso de datos del usuario, redactar controles while y try and except blocks
+que nos permitan detener cualquier intento malicioso del usuario. Si bien es cierto que un bloque try and except nunca va a ser accedido por el simple hecho de que 
+el while del ingreso de datos no lo va a permitir, nunca esta mal tener un backup para la seguridad del programa.
+
+En base a estas reglas podriamos intentar escribir una aproximacion al menu general que tiene que ver el usuario y una llamada a las funciones
+generales (en construccion) que contendra el programa
+
+```c++
+unsigned int user_input{0};
+do 
+    {
+        //? Impresion de Menus
+        helper_function_one_imprimir_linea_separadora_120_chars(); // Crea una linea de 120 chars
+        helper_function_one_imprimir_titulo_120_chars("Menu Principal"); //Imprime titulo organizado
+        std::cout << "1. Jugar una Partida. "
+                     "\n2. Revisar Estadisticas por Jugador."
+                     "\n3. Cambiar el Numero de Jugadores."
+                     "\n4. Cambiar el Nombre de los Jugadores."
+                     "\n5. Salir del Juego.\n";
+        //? Validacion hasta que el dato sea el correto, es decir hasta que ingrese un etero
+        while (std::cout << "Opcion Elegida: " &&
+               !(std::cin >> user_input)){
+            std::cin.clear();
+            std::cin.ignore();
+            std::cout << "Valor invalido, por favor asegurese de ingresar un entero.\n";
+        }
+        //? Difurcacion de casos por tipo de opcion del menu
+        switch(user_input)
+        {
+            case 1: 
+                {
+                    helper_menu_functions_opcion_uno_jugar_partida
+                    (std::vector<pUno_Jugador_Clase>& jugadores_placeholder, 
+                     pUno_Logica_Basica_Class logica_basica_placeholder&);
+                    break;
+                }
+            case 2:
+                {
+                    helper_menu_functions_opcion_dos_revisar_estadisticas
+                    (std::vector<pUno_Jugador_Clase>& jugadores_placeholder,
+                     pUno_Logica_Basica_Class logica_basica_placeholder&);
+                    break;
+                }
+            case 3:
+                {
+                    helper_menu_functions_opcion_tres_cambiar_numero_jugadores
+                    (std::vector<pUno_Jugador_Clase> & Jugadores_placeholder);
+                    break;
+                }
+            case 4:
+                {
+                    helper_menu_functions_opcion_cuatro_cambiar_nombres_jugadores
+                    (std::vector<pUno_Jugador_Clase> & Jugadores_placeholder);
+                    break;
+                }
+            case 5: 
+                {
+                    helper_function_one_imprimir_titulo_120_chars("Gracias por jugar!");
+                    break;
+                }
+            default:
+                {
+                    std::cout << 
+                    "Error Code 0x001 [Raised] - Opcion de menu Invalida, favor intentelo de nuevo"  
+                    << std::endl;
+                    break;
+                }
+        }
+    }
+    while( user_option != 5)
+```
+
+En base al snippet de codigo presentado anteriormente, podemos ntoar que necesitamos de varias secciones de codigo 
+importantes, como lo son el primer control para la validacion de entrada de datos. Ademas de esto
+para la misma seccion y el control sobre el dato ingresado por el ususario notamos que en el switch existe un caso default para evaluar si es que en realidad el ususario no
+solo ingreso un numero sino que si tambien ingreso un numero correcto.
+
+A continuacion de esto entramos a un swithc statement en el cual se detallan las funciones para cada caso y vemos que existen tres de estas que vana  ser muy complicadas de implementar y 
+requeriran mayor esfuerzo, la primera funcion requiere manejar casos de anadir tarjetas, el mayor de los puntajes de los usuarios, etc, todo sin saber el numero exacto por tanto para cada caso
+se trabajara con vectores que permitan controlar el flujo del juego.
+
+Las funciones para cambio de nombre y cambio de numero de jugadores tienen un poco de complejidad porque debemos preguntar al usuario los jugadores a eliminar, y los jugadores a cambiar el nombre.
+Ademas que esto debe usar un metodo pushback y una impresion de nombres de los jugadores en un formato agradable para identificar posiciones en el arreglo.
+
+</ul>

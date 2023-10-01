@@ -100,9 +100,30 @@ int main()
         listado_de_jugadores.push_back(generated_player);
     }
 
-    for(auto const& player: listado_de_jugadores)
-    {
-        std::cout << player.get_nombre_jugador() << std::endl;
-    }
+    //! Paso base.4: Ahora que tenemos los valores de la cantidad de jugadores y sus nombres podemos imprimir el menu
+    //! principal
+    unsigned int opcion_usuario_menu{0};
+    helper_function_one_imprimir_linea_separadora_120_chars();
+    helper_function_one_imprimir_titulo_120_chars("Menu Principal");
+    std::cout << "1.Jugar una Partida."
+                 "\n2. Revisar Estadisticas por Jugador."
+                 "\n3. Cambiar el Numero de Jugadores."
+                 "\n4. Cambiar el Nombre de los Jugadores."
+                 "\n5. Sali del Juego\n";
 
+    //? Paso base.4.1: validacion de ingreso de datos de datos de itpo entero para evitarnos errores graves durante ejecucion
+    while (std::cout << "Opcion Elegida: " && !(std::cin >> opcion_usuario_menu))
+    {
+        std::cin.clear();
+        std::cin.ignore();
+        std::cout << "Tipo de Dato Incorrecto, favor ingresar un numero entero referente al menu anterior\n";
+    }
+    //? Paso base.4.2: Difurcacion de casos en base a input numerico del usuario
+    switch(opcion_usuario_menu)
+    {
+        case 1:
+        {
+
+        }
+    }
 }
