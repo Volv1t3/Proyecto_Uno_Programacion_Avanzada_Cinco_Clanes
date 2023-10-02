@@ -120,9 +120,8 @@ void pUno_Jugador_Class::cuantificar_puntos_del_jugador()
     //? asignado en ejecucion: int)
      auto puntos_registrados_por_caso_1 =  pUno_Jugador_Class::metodo_busqueda_uno_caso_de_armada_con_igual_valor();
      auto puntos_registrados_por_caso_2 =  pUno_Jugador_Class::metodo_busqueda_dos_caso_de_armada_con_igual_tipo();
-    auto puntos_registrados_por_caso_3 =  pUno_Jugador_Class::metodo_busqueda_tres_caso_de_armada_con_rango_consecutivo();
-
-     //? Paso indutivo: sumamos todos los resultados, si hay alguno cero no habria problema porque solo no afecta al resultado, y de esta forma
+     auto puntos_registrados_por_caso_3 =  pUno_Jugador_Class::metodo_busqueda_tres_caso_de_armada_con_rango_consecutivo();
+    //? Paso indutivo: sumamos todos los resultados, si hay alguno cero no habria problema porque solo no afecta al resultado, y de esta forma
      //? solo tenemos los valores de los casos que apliquen.
      this->cantidad_de_puntos_jugador = puntos_registrados_por_caso_1 + puntos_registrados_por_caso_2 + puntos_registrados_por_caso_3;
 }
@@ -192,9 +191,15 @@ int pUno_Jugador_Class::metodo_busqueda_tres_caso_de_armada_con_rango_consecutiv
             }
         }
         if (hay_un_valor_en_la_fila) {counter_tarjetas_con_valores_consecutivos +=1;}
-        else  if (hay_un_valor_en_la_fila == false && counter_tarjetas_con_valores_consecutivos !=0){
-            temp_for_holding_continuity = counter_tarjetas_con_valores_consecutivos;
-            counter_tarjetas_con_valores_consecutivos =0;}
+        else  if (hay_un_valor_en_la_fila == false && counter_tarjetas_con_valores_consecutivos !=0)
+        {
+            if (counter_tarjetas_con_valores_consecutivos < temp_for_holding_continuity) {;}
+            else
+            {
+                temp_for_holding_continuity = counter_tarjetas_con_valores_consecutivos;
+                counter_tarjetas_con_valores_consecutivos =0;
+            }
+        }
     }
 
     //? Paso Inductivo.2: Debemos utilizar logica entre el temp de la continuidad y el valor que puede existir en la variable

@@ -73,14 +73,16 @@ int main()
 
     helper_function_one_imprimir_linea_separadora_120_chars();
     helper_function_one_imprimir_titulo_120_chars("Ingresemos los nombres de cada jugador!");
+    std::cout << std::endl;
     std::cin.clear();
     std::cin.ignore();
     for(size_t index = 0; index < numero_de_jugadores_para_partida; index++)
     {
-        std::string nombre_jugador_placeholder = "Vacio";
+        std::string nombre_jugador_placeholder;
         pUno_Jugador_Class generated_player;
+
         do {
-            std::cout << "Ingresemos el nombre del jugador" << index + 1 << " : ";
+            std::cout << "Ingresemos el nombre del jugador [" << index + 1 << "] : ";
 
             try {
 
@@ -105,25 +107,60 @@ int main()
     unsigned int opcion_usuario_menu{0};
     helper_function_one_imprimir_linea_separadora_120_chars();
     helper_function_one_imprimir_titulo_120_chars("Menu Principal");
-    std::cout << "1.Jugar una Partida."
-                 "\n2. Revisar Estadisticas por Jugador."
-                 "\n3. Cambiar el Numero de Jugadores."
-                 "\n4. Cambiar el Nombre de los Jugadores."
-                 "\n5. Sali del Juego\n";
+    do {
+        std::cout << "1. Jugar una Partida."
+                     "\n2. Revisar Estadisticas por Jugador."
+                     "\n3. Cambiar el Numero de Jugadores."
+                     "\n4. Cambiar el Nombre de los Jugadores."
+                     "\n5. Salir del Juego\n";
 
-    //? Paso base.4.1: validacion de ingreso de datos de datos de itpo entero para evitarnos errores graves durante ejecucion
-    while (std::cout << "Opcion Elegida: " && !(std::cin >> opcion_usuario_menu))
-    {
-        std::cin.clear();
-        std::cin.ignore();
-        std::cout << "Tipo de Dato Incorrecto, favor ingresar un numero entero referente al menu anterior\n";
-    }
-    //? Paso base.4.2: Difurcacion de casos en base a input numerico del usuario
-    switch(opcion_usuario_menu)
-    {
-        case 1:
-        {
-
+        //? Paso base.4.1: validacion de ingreso de datos de datos de itpo entero para evitarnos errores graves durante ejecucion
+        while (std::cout << "Opcion Elegida: " && !(std::cin >> opcion_usuario_menu)) {
+            std::cin.clear();
+            std::cin.ignore();
+            std::cout << "Tipo de Dato Incorrecto, favor ingresar un numero entero referente al menu anterior\n";
+        }
+        //? Paso base.4.2: Difurcacion de casos en base a input numerico del usuario
+        std::cout << std::endl;
+        switch (opcion_usuario_menu) {
+            case 1: {
+                helper_function_one_imprimir_linea_separadora_120_chars();
+                helper_menu_functions_opcion_uno_jugar_partida(listado_de_jugadores, logica_basica_alpha);
+                helper_function_one_imprimir_linea_separadora_120_chars();
+                break;
+            }
+            case 2: {
+                helper_function_one_imprimir_linea_separadora_120_chars();
+                helper_menu_functions_opcion_dos_revisar_estadisticas(listado_de_jugadores);
+                helper_function_one_imprimir_linea_separadora_120_chars();
+                break;
+            }
+            case 3: {
+                helper_function_one_imprimir_linea_separadora_120_chars();
+                helper_menu_functions_opcion_tres_cambiar_numero_jugadores(listado_de_jugadores);
+                helper_function_one_imprimir_linea_separadora_120_chars();
+                break;
+            }
+            case 4: {
+                helper_function_one_imprimir_linea_separadora_120_chars();
+                helper_menu_functions_opcion_cuatro_cambiar_nombres_jugadores(listado_de_jugadores);
+                helper_function_one_imprimir_linea_separadora_120_chars();
+                break;
+            }
+            case 5: {
+                helper_function_one_imprimir_linea_separadora_120_chars();
+                helper_function_one_imprimir_titulo_120_chars("Gracias por Jugar!");
+                helper_function_one_imprimir_linea_separadora_120_chars();
+                break;
+            }
+            default: {
+                helper_function_one_imprimir_linea_separadora_120_chars();
+                std::cout
+                        << "El valor ingresado, no corresponde a ninguna opcion en nuestro menu, favor revisar su input."
+                        << std::endl;
+                helper_function_one_imprimir_linea_separadora_120_chars();
+            }
         }
     }
+    while (opcion_usuario_menu != 5);
 }

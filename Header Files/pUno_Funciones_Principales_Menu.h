@@ -39,7 +39,8 @@ void helper_function_one_imprimir_titulo_120_chars(std::string titulo);
 void helper_functions_one_imrpimir_listado_de_y_estadistica_de_victorias_jugadores(std::vector<pUno_Jugador_Class>& player_array_placeholder);
 void helper_functions_one_imprimir_resultados_estadisticos_en_forma_de_diagrama(std::vector<pUno_Jugador_Class>& player_array_placeholder);
 void helper_functions_one_imprimir_listado_de_tarjetas_por_jugador(std::vector<pUno_Jugador_Class>& player_array_placeholder);
-void helper_functions_one_anadir_un_numero_de_cartas_a_los_jugadores(std::vector<pUno_Jugador_Class>& player_array_placeholder, pUno_Logica_Basica_Class& logica_basica_instance_placeholder,int numero_cartas_a_anadir );
+bool helper_functions_one_anadir_un_numero_de_cartas_a_los_jugadores(std::vector<pUno_Jugador_Class>& player_array_placeholder, pUno_Logica_Basica_Class& logica_basica_instance_placeholder,int numero_cartas_a_anadir );
+void helper_function_one_imprimir_listado_de_jugadores(std::vector<pUno_Jugador_Class>&  player_array_placeholder);
 retorno_valor_e_index_ganador helper_functions_one_kadane_approximation_to_find_largest_value_or_equal_values_in_array(std::vector<int>& array_placeholder);
 
 //? Funciones de Juego y Helpers

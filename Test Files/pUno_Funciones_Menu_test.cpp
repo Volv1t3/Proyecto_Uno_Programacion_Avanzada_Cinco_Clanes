@@ -50,5 +50,7 @@ int main()
     helper_functions_one_imrpimir_listado_de_y_estadistica_de_victorias_jugadores(jugadores);
     helper_functions_one_imprimir_resultados_estadisticos_en_forma_de_diagrama(jugadores);
     helper_menu_functions_opcion_uno_jugar_partida(jugadores, logic_base_alpha);
-
+    helper_menu_functions_opcion_dos_revisar_estadisticas(jugadores);
+    helper_menu_functions_opcion_tres_cambiar_numero_jugadores(jugadores);
+    helper_menu_functions_opcion_cuatro_cambiar_nombres_jugadores(jugadores);
 }
