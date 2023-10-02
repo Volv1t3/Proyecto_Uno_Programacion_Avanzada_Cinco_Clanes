@@ -415,4 +415,63 @@ se trabajara con vectores que permitan controlar el flujo del juego.
 Las funciones para cambio de nombre y cambio de numero de jugadores tienen un poco de complejidad porque debemos preguntar al usuario los jugadores a eliminar, y los jugadores a cambiar el nombre.
 Ademas que esto debe usar un metodo pushback y una impresion de nombres de los jugadores en un formato agradable para identificar posiciones en el arreglo.
 
+Luego de haber terminado la implementacion de las funciones para el menu principal, es clave analizar el desempeno y complejidad
+de construccion que se ha presentado a lo largo de su desarrollo. Principalmente un problema fue la falta de direccion por 
+parte de las indicaciones del proyecto en algunos puntos claves de desarrollo del juego durante empates con diferentes valores o 
+con valores iguales a cero. Por tanto, el desarrollo de una función que realice el chequeo para este tipo de casos fue arduo
+y requirio implementar varios niveles de complejidad extra en las funciones del juego. 
+
+<ul>
+    <li> Por citar un ejemplo, en la funcion general del caso 1, para jugar la partida, necesitamos implementar cuatro diferentes
+niveles de seguridad para las tarjetas y para el chequeo de datos, una de las funciones mas complejas de todo el juego y que gracias a un exhaustivo
+decoupling de secciones repetidas a helper_functions se logro reducir y trabajar acorde a lo especificado.</li>
+<li> En otra instancia, como fue para el chequeo de los valores del arreglo de puntos para cada usuario, la dificultad principal fue el hacer que una misma funcion 
+se encargue de realizar todo chequeo necesario, si son iguales, si son valores de cero, si son diferentes, o si hay un ganador. Esto se cumplio gracias a un prtotipo de funcion lineal, una aproximacion a la funcion de Kadane para 
+transversar arreglos. <br>
+
+Para esto se aplico un chequeo lineal de cada valor y se guarda tanto el indice como el valor del resultado mas alto. Si bien
+estos valores ya los conoce la aplicacion, el return de valores nos permite trabajar directamente dentro del arreglo de jugadores y modificar los valores del ganador.
+</li>
+<li> Adicionalmente, hubo un nivel de complejidad adicional impuesto en las funciones para anadir cartas al usuario, ya que este debia de por funcionar y darse cuenta de que se han acabo las cartas, 
+algo que mas o menos nunca puede pasar, ya que el juego es deterministico y sabemos que alguien en algun momento va  a ganar. Y ademas se implemento un chequeo booleano, proveninente de esta funcion para
+notar cambios en la distribucion de cartas, y afrontar el retorno de una senal de baraja vacia de mejor manera.
+
+</li>
 </ul>
+</ul>
+
+* ** 
+<h6 style=" font-family: 'Segoe UI', serif; font-size: 14pt; color: azure"> Comentarios Finales sobre Implementacion </h6>
+
+<ul style="font-family: 'Segoe UI', serif; list-style: upper-alpha; color: antiquewhite">
+<li>
+    La implementacion de un juego de cartas se trabaja mejor con metodos de control anidados, generacion aleatoria con funciones
+deterministicas y matematicas como las del 
+
+```c++
+#include <algorithm>
+#include <random>
+```
+
+Estas funciones nos permiten generar valores que sabemos que seran aleatorios, sin tener que preocuparnos por valores repetidos, 
+valores incoherentes o valores similares en cada iteracion. Los valores generados a traves de la libreria random y aplicados con
+algorithm son excelentes para promover una generacion de valores correctos y aleatorios, mejores que lo que hace ctime. 
+</li>
+
+<li> EL decouppling the metodos es muy util para trabajar con programas multiarchivos, asimismo, el trabajar con un proyecto multiarchivos, facilita el
+desarrollo en paralelo y la extesion horizontal y vertical del programa con mas facilidad. Al no depender directamente de metodos compuestos y funciones de 200+ lineas, el programa
+tiene flexibilidad y no presenta varios puntos de falla a a causa de una funcion incorrecta. Al crear varias funciones podemos manejar errores e inputs de mejor manera, valiendonos de los codigos de error que se alnzan,
+en cada metodo y funcion del programa. Asimismo, la expansion del programa en una serie de archivos, y clases individuales podemos expandir el codigo
+para asi tener mas opotunidades de expansion vertical y horizontal, al ser capaces de anadir multiples funcionalidades, sabiendo que los metodos son seguros y su implementacion es concreta. 
+
+</li>
+
+<li> Los codigos de errores planteados originalmente en este archivo fueron de gran ayuda para el debugging de la aplicacion, al saber exactamente de que metodose alzo la exepcion, y los valores del parametro danado, nos permiten
+revisar los envios y facilitan el proceso de debugging al usar un debugger com el que viene en el entorno de Clion que permite revisar llamadas hasta al thread del cpu y revisar que dato fue el del problema.
+</li>
+</ul>
+
+
+
+
+
