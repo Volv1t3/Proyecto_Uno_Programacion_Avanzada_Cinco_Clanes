@@ -221,3 +221,18 @@ void pUno_Jugador_Class::imprimir_cartas_del_jugador()
     }
 }
 
+void pUno_Jugador_Class::limpiar_cartas_y_puntos_del_jugador()
+{
+    for(size_t row_index = 0; row_index < pUno_Jugador_Class::holder_matriz_para_tarjetas_por_fila_y_columna.size(); row_index+=1)
+    {
+        for (size_t col_index = 0; col_index < pUno_Jugador_Class::holder_matriz_para_tarjetas_por_fila_y_columna.at(row_index).size(); col_index+=1)
+        {
+            pUno_Jugador_Class::holder_matriz_para_tarjetas_por_fila_y_columna.at(row_index).at(col_index) = 0;
+        }
+    }
+
+    this->holder_para_nombres_de_tarjetas_jugador.clear();
+    this->cantidad_de_cartas_jugador = 0;
+    this->cantidad_de_puntos_jugador = 0;
+}
+

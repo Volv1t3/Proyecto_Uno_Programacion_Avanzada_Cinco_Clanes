@@ -66,6 +66,7 @@ public:
         void cuantificar_puntos_del_jugador();
     //! Metodo para imprimir las cartas del usuario.
     void imprimir_cartas_del_jugador();
+    void limpiar_cartas_y_puntos_del_jugador();
 protected:
     //! Paso base.2: Definimos Los metodos de busqueda para encontrar cada caso para victoria, lo hacemos dentor de la clase
     //! jugador y nos evitamos tener que sacar informacion privilegiada al main del juego como lo son los arreglos de tarjetas
@@ -76,5 +77,7 @@ protected:
     [[nodiscard]] int  metodo_busqueda_dos_caso_de_armada_con_igual_tipo();
     //? Metodo para el tercer caso (mas de tres tarjetas con rango consecutivo)
     [[nodiscard]] int metodo_busqueda_tres_caso_de_armada_con_rango_consecutivo();
+    //? Metodo para limpiar los datos del jugador luego de haber jugado una partida
+
 };
 #endif //PROYECTO_UNO_PROGRAMACION_AVANZADA_CINCO_CLANES_PUNO_JUGADOR_CLASS_H
