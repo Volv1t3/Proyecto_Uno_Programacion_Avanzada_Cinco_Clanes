@@ -225,7 +225,7 @@ void helper_menu_functions_opcion_uno_jugar_partida(std::vector<pUno_Jugador_Cla
                 std::cout << "Seleccione una de las siguientes opciones:\n1.Salir de la Partida Sin Ganador.\n2. Repartir Mas Cartas Hasta Encontrar un ganador\n";
                     while (std::cout << "Su opcion: " && !(std::cin >> user_option)) {
                         std::cin.clear();
-                        std::cin.ignore();
+                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                         std::cout << "Favor Ingrese un numero entero para esta opcion de menu." << std::endl;
                     }
                 switch(user_option)
@@ -346,8 +346,13 @@ void helper_menu_functions_opcion_cuatro_cambiar_nombres_jugadores(std::vector<p
     int index_a_cambiar_el_nombre{0};
     std::string nuevo_nombre_de_jugador;
     do {
-        std::cout << "Ingrese el indice del Jugador que desea cambiar el nombre (-1 para finalizar el proceso): ";
-        std::cin >> index_a_cambiar_el_nombre;
+        while (std::cout << "Ingrese el indice del Jugador que desea cambiar el nombre (-1 para finalizar el proceso): " << std::endl
+        && !(std::cin>>index_a_cambiar_el_nombre))
+        {
+            std::cout << "Valor ingresado incorrecto,asegurese de que sea un entero en el rango 2 a 5." << std::endl;
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
         if((index_a_cambiar_el_nombre >= 1  && index_a_cambiar_el_nombre <= player_array_placeholder.size()))
