@@ -55,14 +55,23 @@ int main()
 
     do {
         try {
-            std::cout << "Ingrese el numero de jugadores a participar: ";
-            std::cin >> numero_de_jugadores_para_partida;
+            while (std::cout << "Ingrese el numero de jugadores a participar: " && !(std::cin >> numero_de_jugadores_para_partida))
+            {
+                std::cin.clear();
+                std::cout << "Error en el valor ingresado, favor de ingresar un valor numerico" << std::endl;
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            }
             std::cout << std::endl;
         }
         catch(std::exception & error)
         {
             std::cerr << "Error 0x001 [Raised] - El parametro ingresado para el numero de jugadores es incorrecto." << std::endl;
             std::cerr << error.what() << std::endl;
+        }
+        if (numero_de_jugadores_para_partida < 2 || numero_de_jugadores_para_partida > 5)
+        {
+            std::cout << "Error en el valor ingresado, solo se permiten jugadores entre 2 y 5" << std::endl;
         }
     }
     while (numero_de_jugadores_para_partida < 2 || numero_de_jugadores_para_partida > 5);
@@ -116,9 +125,9 @@ int main()
 
         //? Paso base.4.1: validacion de ingreso de datos de datos de itpo entero para evitarnos errores graves durante ejecucion
         while (std::cout << "Opcion Elegida: " && !(std::cin >> opcion_usuario_menu)) {
-            std::cin.clear();
-            std::cin.ignore();
             std::cout << "Tipo de Dato Incorrecto, favor ingresar un numero entero referente al menu anterior\n";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
         //? Paso base.4.2: Difurcacion de casos en base a input numerico del usuario
         std::cout << std::endl;

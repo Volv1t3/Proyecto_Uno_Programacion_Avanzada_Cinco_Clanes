@@ -300,14 +300,17 @@ void helper_menu_functions_opcion_tres_cambiar_numero_jugadores(std::vector<pUno
     int numero_jugadores_nuevo{0};
 
     do {
-        std::cout << "Favor Ingrese el nuevo numero de jugadores que participaran en la siguiente partida "
-                     "(Recuerda que solo pueden ser entre 2 a 5 jugadores!) : ";
-        std::cin >> numero_jugadores_nuevo;
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        while (std::cout << "Favor Ingrese el nuevo numero de jugadores que participaran en la siguiente partida "
+                            "(Recuerda que solo pueden ser entre 2 a 5 jugadores!) : " && !(std::cin >> numero_jugadores_nuevo)) {
+            std::cout << " Error en el ingreso de datos, favor Ingrese un numero entero entre 2 a 5." << std::endl;
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
 
     }
     while (numero_jugadores_nuevo < 2 || numero_jugadores_nuevo > 5);
 
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     if (numero_jugadores_nuevo >=2 && numero_jugadores_nuevo <= 5)
     {
         std::cout << std::endl;
@@ -317,10 +320,10 @@ void helper_menu_functions_opcion_tres_cambiar_numero_jugadores(std::vector<pUno
         player_array_placeholder.clear();
         for(size_t index = 0; index < numero_jugadores_nuevo; index +=1)
         {
+
             pUno_Jugador_Class jugador_nuevo_placeholder;
             std::string nuevo_nombre_placeholder;
             do {
-                std::cout << std::endl;
                 std::cout << "Favor Ingrese el nombre del jugador [" << index + 1 << "] : ";
                 std::getline(std::cin, nuevo_nombre_placeholder);
                 jugador_nuevo_placeholder.set_nombre_jugador(nuevo_nombre_placeholder);
